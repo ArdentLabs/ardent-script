@@ -1,31 +1,39 @@
-import { generateValues } from '../generator'
+import { generateVariables } from '../generator'
 
 describe('value generator', () => {
-  it('can generate values', () => {
-    const variables = generateValues([
+  beforeEach(() => {
+    // Mock random to make tests deterministic
+    Math.random = jest
+      .fn()
+      .mockReturnValueOnce(0.3)
+      .mockReturnValueOnce(0.1)
+      .mockReturnValueOnce(0.4)
+      .mockReturnValueOnce(0.1)
+      .mockReturnValueOnce(0.5)
+      .mockReturnValueOnce(0.9)
+      .mockReturnValueOnce(0.2)
+      .mockReturnValueOnce(0.6)
+  })
+
+  it('randomly generates values', () => {
+    const variables = generateVariables([
       { name: 'randint', type: 'RANDOMINT', min: 2, max: 6 },
       { name: 'randfloat', type: 'RANDOMFLOAT', min: 7, max: 15 },
-      { name: 'var', type: 'VARIABLE', symbol: 'x' },
     ])
 
     expect(variables).toMatchObject({
       randint: expect.any(String),
       randfloat: expect.any(String),
-      var: 'x',
     })
 
-    expect(parseInt(variables.randint)).not.toBeNaN()
-    expect(parseInt(variables.randint)).toBeGreaterThanOrEqual(2)
-    expect(parseInt(variables.randint)).toBeLessThan(6)
+    expect(parseInt(variables.randint)).toBe(3)
 
-    expect(parseFloat(variables.randfloat)).not.toBeNaN()
-    expect(parseFloat(variables.randfloat)).toBeGreaterThanOrEqual(7)
-    expect(parseFloat(variables.randfloat)).toBeLessThan(15)
+    expect(parseFloat(variables.randfloat)).toBeCloseTo(7.8)
   })
 
   it('can supply default names', () => {
     expect(
-      generateValues([
+      generateVariables([
         { type: 'RANDOMINT', min: -5, max: 13 },
         { type: 'RANDOMINT', min: 4, max: 8 },
         { type: 'RANDOMFLOAT', min: 4.6, max: 77 },
@@ -37,7 +45,7 @@ describe('value generator', () => {
     })
 
     expect(
-      generateValues([
+      generateVariables([
         { name: 'uses', type: 'RANDOMINT', min: -5, max: 13 },
         { type: 'RANDOMINT', min: 4, max: 8 },
         { name: 'position', type: 'RANDOMFLOAT', min: 4.6, max: 77 },
@@ -49,12 +57,27 @@ describe('value generator', () => {
     })
   })
 
+  it('can evaluate composite expressions', () => {
+    const variables = generateVariables([
+      {
+        type: 'EVALUATE',
+        expression: '{1} * {2} + 5',
+        variables: [
+          { type: 'RANDOMFLOAT', min: 4, max: 6 },
+          { type: 'RANDOMINT', min: 3, max: 12 },
+        ],
+      },
+    ])
+
+    expect(parseFloat(variables['1'])).toBeCloseTo(18.8)
+  })
+
   it('errors on duplicate name', () => {
     expect(() => {
-      generateValues([
+      generateVariables([
         { name: 'ok', type: 'RANDOMINT', min: 2, max: 4 },
-        { name: 'duplicate', type: 'VARIABLE', symbol: 'dup' },
-        { name: 'duplicate', type: 'VARIABLE', symbol: 'd' },
+        { name: 'duplicate', type: 'RANDOMINT', min: 3, max: 5 },
+        { name: 'duplicate', type: 'RANDOMINT', min: 4, max: 6 },
       ])
     }).toThrow()
   })

@@ -2,7 +2,10 @@
  * Responsible for generating concrete values from template variables.
  */
 
-type VariableTemplate = {
+import { evaluate } from 'mathjs'
+import { interpolate } from './interpolation'
+
+export type VariableTemplate = {
   name?: string
 } & (
   | {
@@ -14,27 +17,41 @@ type VariableTemplate = {
       type: 'RANDOMFLOAT'
       min: number
       max: number
+      numDigits?: number
     }
   | {
-      type: 'VARIABLE'
-      symbol: string
+      type: 'EVALUATE'
+      expression: string
+      variables: VariableTemplate[]
     }
 )
 
 const generateValue = (template: VariableTemplate): string => {
   switch (template.type) {
-    case 'RANDOMFLOAT':
-      return `${template.min + Math.random() * (template.max - template.min)}`
-    case 'RANDOMINT':
+    case 'RANDOMFLOAT': {
+      const value = template.min + Math.random() * (template.max - template.min)
+      if (template.numDigits != null) {
+        return value.toFixed(template.numDigits)
+      } else {
+        return value.toString()
+      }
+    }
+    case 'RANDOMINT': {
       return `${
         template.min + Math.floor(Math.random() * (template.max - template.min))
       }`
-    case 'VARIABLE':
-      return template.symbol
+    }
+    case 'EVALUATE': {
+      const expression = interpolate(
+        template.expression,
+        generateVariables(template.variables)
+      )
+      return `${evaluate(expression)}`
+    }
   }
 }
 
-export const generateValues = (
+export const generateVariables = (
   templates: VariableTemplate[]
 ): Record<string, string> => {
   const values: Record<string, string> = {}
