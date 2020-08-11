@@ -1,3 +1,7 @@
+/**
+ * Responsible for instantiating a template string with the given values
+ */
+
 const regex = /(?<lead>^|[^{]){(?<var>[^\s{}]+)}|(?<escl>{{)|(?<escr>}})/g
 
 export const interpolate = (
