@@ -7,7 +7,7 @@
     "dist/**/*"
   ],
   "scripts": {
-    "prettier": "prettier --write src/**/*.ts",
+    "prettier": "prettier --write src",
     "lint": "eslint src --ext .ts --rule 'prettier/prettier: error'",
     "test": "jest --config jest.config.json",
     "build": "tsc",

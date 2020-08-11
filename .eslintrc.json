@@ -6,6 +6,7 @@
     "prettier/@typescript-eslint"
   ],
   "plugins": ["@typescript-eslint", "prettier"],
+  "ignorePatterns": ["dist/**/*"],
   "rules": {
     "prettier/prettier": "warn",
     "no-useless-rename": "error"
