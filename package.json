@@ -1,0 +1,37 @@
+{
+  "name": "ardent-script",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ArdentLabs/ardent-script.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ArdentLabs/ardent-script/issues"
+  },
+  "homepage": "https://github.com/ArdentLabs/ardent-script#readme",
+  "devDependencies": {
+    "@types/jest": "^26.0.9",
+    "@types/mathjs": "^6.0.5",
+    "@types/node": "^14.0.27",
+    "@typescript-eslint/eslint-plugin": "^3.9.0",
+    "@typescript-eslint/parser": "^3.9.0",
+    "eslint": "^7.6.0",
+    "eslint-config-prettier": "^6.11.0",
+    "eslint-plugin-prettier": "^3.1.4",
+    "jest": "^26.3.0",
+    "prettier": "^2.0.5",
+    "standard-version": "^8.0.2",
+    "ts-jest": "^26.2.0",
+    "typescript": "^3.9.7"
+  },
+  "dependencies": {
+    "mathjs": "^7.1.0"
+  }
+}
