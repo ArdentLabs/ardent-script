@@ -1,0 +1,24 @@
+name: test
+
+on:
+  push:
+    branches-ignore: [master, develop]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout
+        uses: actions/checkout@v2
+      - name: node
+        uses: actions/setup-node@v1
+      - name: cache
+        uses: actions/cache@v2
+        with:
+          path: ~/.npm
+          key: ${{ runner.OS }}-npm-${{ hashFiles('package-lock.json') }}
+          restore-keys: |
+            ${{ runner.OS }}-npm
+      - run: npm ci --dev
+      - run: npm run lint
+      - run: npm run test
