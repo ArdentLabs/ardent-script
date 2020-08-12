@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.1.1](https://github.com/ArdentLabs/ardent-script/compare/v1.1.0...v1.1.1) (2020-08-12)
+
+
+### Bug Fixes
+
+* **interpolation:** Fix adjacent interpolations failing to substitute ([cfa0cc3](https://github.com/ArdentLabs/ardent-script/commit/cfa0cc3241178ce4f5843eed6add4266c3fe9981))
+
 ## 1.1.0 (2020-08-12)
 
 
