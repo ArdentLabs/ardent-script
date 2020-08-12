@@ -1,4 +1,5 @@
 import { interpolate } from '../interpolation'
+import { ValueNotFound } from '../errors'
 
 describe('interpolation engine', () => {
   it('does not affect non template strings', () => {
@@ -44,6 +45,8 @@ describe('interpolation engine', () => {
   })
 
   it('can detect invalid variables', () => {
-    expect(() => interpolate('{invalid} variable', { valid: 'foo' })).toThrow()
+    expect(() => interpolate('{invalid} variable', { valid: 'foo' })).toThrow(
+      ValueNotFound
+    )
   })
 })

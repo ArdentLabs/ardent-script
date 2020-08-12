@@ -5,6 +5,7 @@
 import { evaluate, simplify } from 'mathjs'
 import { VariableTemplate, generateVariables } from './generator'
 import { interpolate } from './interpolation'
+import { FailedVariableInstantiation } from './errors'
 
 interface ProblemTemplateBase {
   variables: VariableTemplate[]
@@ -36,6 +37,7 @@ export interface ProblemInstance {
 
 export const instantiate = (template: ProblemTemplate): ProblemInstance => {
   const variables = generateVariables(template.variables)
+
   const questionText = interpolate(template.questionTemplate, variables)
 
   const getSolution = (): Pick<

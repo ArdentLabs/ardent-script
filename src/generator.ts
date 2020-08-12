@@ -5,6 +5,7 @@
 import { evaluate } from 'mathjs'
 import { interpolate } from './interpolation'
 import { random } from './random'
+import { DuplicateVariableName, FailedVariableInstantiation } from './errors'
 
 export type VariableTemplate = {
   name?: string
@@ -62,10 +63,14 @@ export const generateVariables = (
     const name = template.name ?? `${i + 1}`
 
     if (name in values) {
-      throw new Error(`Duplicate variable "${name}"`)
+      throw new DuplicateVariableName(name)
     }
 
-    values[name] = generateValue(template, values)
+    try {
+      values[name] = generateValue(template, values)
+    } catch (error) {
+      throw new FailedVariableInstantiation(name, error)
+    }
   }
 
   return values

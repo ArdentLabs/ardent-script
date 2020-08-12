@@ -1,5 +1,6 @@
 import { reset } from '../random'
 import { generateVariables } from '../generator'
+import { DuplicateVariableName, FailedVariableInstantiation } from '../errors'
 
 jest.mock('../random')
 
@@ -58,13 +59,21 @@ describe('value generator', () => {
     expect(parseFloat(variables['3'])).toBeCloseTo(18.8)
   })
 
-  it('errors on duplicate name', () => {
+  it('throws appropriate errors', () => {
     expect(() => {
       generateVariables([
         { name: 'ok', type: 'RANDOMINT', min: 2, max: 4 },
         { name: 'duplicate', type: 'RANDOMINT', min: 3, max: 5 },
         { name: 'duplicate', type: 'RANDOMINT', min: 4, max: 6 },
       ])
-    }).toThrow()
+    }).toThrow(DuplicateVariableName)
+
+    expect(() => {
+      generateVariables([
+        { name: 'badorder', type: 'EVALUATE', expression: '{dep1} + {dep2}' },
+        { name: 'dep1', type: 'RANDOMINT', min: 4, max: 8 },
+        { name: 'dep2', type: 'RANDOMINT', min: 3, max: 10 },
+      ])
+    }).toThrow(FailedVariableInstantiation)
   })
 })
