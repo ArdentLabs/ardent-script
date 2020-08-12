@@ -50,17 +50,12 @@ describe('value generator', () => {
 
   it('can evaluate composite expressions', () => {
     const variables = generateVariables([
-      {
-        type: 'EVALUATE',
-        expression: '{1} * {2} + 5',
-        variables: [
-          { type: 'RANDOMFLOAT', min: 4, max: 6 },
-          { type: 'RANDOMINT', min: 3, max: 12 },
-        ],
-      },
+      { type: 'RANDOMFLOAT', min: 4, max: 6 },
+      { type: 'RANDOMINT', min: 3, max: 12 },
+      { type: 'EVALUATE', expression: '{1} * {2} + 5' },
     ])
 
-    expect(parseFloat(variables['1'])).toBeCloseTo(18.8)
+    expect(parseFloat(variables['3'])).toBeCloseTo(18.8)
   })
 
   it('errors on duplicate name', () => {

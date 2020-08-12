@@ -18,16 +18,19 @@ export type VariableTemplate = {
       type: 'RANDOMFLOAT'
       min: number
       max: number
+      /** If defined, round to this many digits after the decimal */
       numDigits?: number
     }
   | {
       type: 'EVALUATE'
       expression: string
-      variables: VariableTemplate[]
     }
 )
 
-const generateValue = (template: VariableTemplate): string => {
+const generateValue = (
+  template: VariableTemplate,
+  values: Record<string, string>
+): string => {
   switch (template.type) {
     case 'RANDOMFLOAT': {
       const value = template.min + random() * (template.max - template.min)
@@ -43,10 +46,7 @@ const generateValue = (template: VariableTemplate): string => {
       }`
     }
     case 'EVALUATE': {
-      const expression = interpolate(
-        template.expression,
-        generateVariables(template.variables)
-      )
+      const expression = interpolate(template.expression, values)
       return `${evaluate(expression)}`
     }
   }
@@ -65,7 +65,7 @@ export const generateVariables = (
       throw new Error(`Duplicate variable "${name}"`)
     }
 
-    values[name] = generateValue(template)
+    values[name] = generateValue(template, values)
   }
 
   return values
