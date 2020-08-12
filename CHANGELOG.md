@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.1.3](https://github.com/ArdentLabs/ardent-script/compare/v1.1.1...v1.1.3) (2020-08-12)
+
+
+### Bug Fixes
+
+* Add exports to index ([21ea49a](https://github.com/ArdentLabs/ardent-script/commit/21ea49a9d5f8dc1fa1dca3a5fceabb68f69cc785))
+
 ### [1.1.2](https://github.com/ArdentLabs/ardent-script/compare/v1.1.1...v1.1.2) (2020-08-12)
 
 
