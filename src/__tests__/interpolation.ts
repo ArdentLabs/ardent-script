@@ -11,6 +11,13 @@ describe('interpolation engine', () => {
     )
 
     expect(
+      interpolate('{adjacent}{substitutions}', {
+        adjacent: 'foo',
+        substitutions: 'bar',
+      })
+    ).toEqual('foobar')
+
+    expect(
       interpolate('This string is {var1} from {var2} {x3}', {
         var1: 'constructed',
         var2: 'multiple',
