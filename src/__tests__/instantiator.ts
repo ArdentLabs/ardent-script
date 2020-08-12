@@ -77,4 +77,28 @@ describe('problem instantiator', () => {
       solutionValue: 5,
     })
   })
+
+  it('can concatnate values to achieve specific patterns', () => {
+    expect(
+      instantiate({
+        variables: [
+          { name: 'ones', type: 'RANDOMINT', min: 5, max: 10 },
+          { name: 'tens', type: 'RANDOMINT', min: 3, max: 16 },
+          { name: 'add', type: 'RANDOMINT', min: 7, max: 10 },
+        ],
+        questionTemplate: '{tens}{ones} + {add}',
+        solutionType: 'EVALUATE',
+        solutionTemplate: '{tens}{ones} + {add}',
+      })
+    ).toEqual({
+      variables: {
+        ones: '6',
+        tens: '4',
+        add: '8',
+      },
+      questionText: '46 + 8',
+      solutionExpression: '46 + 8',
+      solutionValue: 54,
+    })
+  })
 })
