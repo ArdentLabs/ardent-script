@@ -1,19 +1,10 @@
+import { reset } from '../random'
 import { generateVariables } from '../generator'
 
+jest.mock('../random')
+
 describe('value generator', () => {
-  beforeEach(() => {
-    // Mock random to make tests deterministic
-    Math.random = jest
-      .fn()
-      .mockReturnValueOnce(0.3)
-      .mockReturnValueOnce(0.1)
-      .mockReturnValueOnce(0.4)
-      .mockReturnValueOnce(0.1)
-      .mockReturnValueOnce(0.5)
-      .mockReturnValueOnce(0.9)
-      .mockReturnValueOnce(0.2)
-      .mockReturnValueOnce(0.6)
-  })
+  beforeEach(reset)
 
   it('randomly generates values', () => {
     const variables = generateVariables([

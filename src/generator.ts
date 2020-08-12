@@ -4,6 +4,7 @@
 
 import { evaluate } from 'mathjs'
 import { interpolate } from './interpolation'
+import { random } from './random'
 
 export type VariableTemplate = {
   name?: string
@@ -29,7 +30,7 @@ export type VariableTemplate = {
 const generateValue = (template: VariableTemplate): string => {
   switch (template.type) {
     case 'RANDOMFLOAT': {
-      const value = template.min + Math.random() * (template.max - template.min)
+      const value = template.min + random() * (template.max - template.min)
       if (template.numDigits != null) {
         return value.toFixed(template.numDigits)
       } else {
@@ -38,7 +39,7 @@ const generateValue = (template: VariableTemplate): string => {
     }
     case 'RANDOMINT': {
       return `${
-        template.min + Math.floor(Math.random() * (template.max - template.min))
+        template.min + Math.floor(random() * (template.max - template.min))
       }`
     }
     case 'EVALUATE': {
