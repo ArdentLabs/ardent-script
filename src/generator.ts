@@ -26,7 +26,24 @@ export type VariableTemplate = {
       type: 'EVALUATE'
       expression: string
     }
+  | {
+      type: 'SHUFFLEADD'
+      variables: string[]
+    }
+  | {
+      type: 'SHUFFLEMULT'
+      variables: string[]
+    }
 )
+
+const shuffle = <T>(input: T[]): T[] => {
+  const output = [...input]
+  for (let i = output.length - 1; i > 0; i--) {
+    const j = Math.floor(random() * (i + 1))
+    ;[output[i], output[j]] = [output[j], output[i]]
+  }
+  return output
+}
 
 const generateValue = (
   template: VariableTemplate,
@@ -49,6 +66,22 @@ const generateValue = (
     case 'EVALUATE': {
       const expression = interpolate(template.expression, values)
       return `${evaluate(expression)}`
+    }
+    case 'SHUFFLEADD': {
+      return interpolate(
+        shuffle(template.variables)
+          .map((variable) => `{${variable}}`)
+          .join(' + '),
+        values
+      )
+    }
+    case 'SHUFFLEMULT': {
+      return interpolate(
+        shuffle(template.variables)
+          .map((variable) => `{${variable}}`)
+          .join(' * '),
+        values
+      )
     }
   }
 }

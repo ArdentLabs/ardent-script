@@ -1,4 +1,4 @@
-import { reset } from '../random'
+import { reset, random } from '../random'
 import { generateVariables } from '../generator'
 import { DuplicateVariableName, FailedVariableInstantiation } from '../errors'
 
@@ -57,6 +57,46 @@ describe('value generator', () => {
     ])
 
     expect(parseFloat(variables['3'])).toBeCloseTo(18.8)
+  })
+
+  it('can shuffle variables', () => {
+    expect(
+      generateVariables([
+        { type: 'RANDOMFLOAT', min: 0, max: 1, numDigits: 1 },
+        { type: 'RANDOMFLOAT', min: 0, max: 1, numDigits: 1 },
+        { type: 'RANDOMFLOAT', min: 0, max: 1, numDigits: 1 },
+        { type: 'RANDOMFLOAT', min: 0, max: 1, numDigits: 1 },
+        { type: 'SHUFFLEADD', variables: ['1', '2', '3', '4'] },
+      ])
+    ).toEqual({
+      '1': '0.3',
+      '2': '0.1',
+      '3': '0.4',
+      '4': '0.1',
+      '5': '0.1 + 0.3 + 0.1 + 0.4',
+    })
+    expect(random).toBeCalledTimes(7)
+
+    reset()
+
+    expect(
+      generateVariables([
+        { type: 'RANDOMFLOAT', min: 0, max: 2, numDigits: 1 },
+        { type: 'RANDOMFLOAT', min: 0, max: 2, numDigits: 1 },
+        { type: 'RANDOMFLOAT', min: 0, max: 2, numDigits: 1 },
+        { type: 'RANDOMFLOAT', min: 1, max: 2, numDigits: 1 },
+        { type: 'RANDOMFLOAT', min: 0, max: 2, numDigits: 1 },
+        { type: 'SHUFFLEMULT', variables: ['1', '2', '3', '4', '5'] },
+      ])
+    ).toEqual({
+      '1': '0.6',
+      '2': '0.2',
+      '3': '0.8',
+      '4': '1.1',
+      '5': '1.0',
+      '6': '0.8 * 1.1 * 0.2 * 0.6 * 1.0',
+    })
+    expect(random).toBeCalledTimes(9)
   })
 
   it('throws appropriate errors', () => {
