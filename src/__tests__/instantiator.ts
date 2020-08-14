@@ -101,4 +101,26 @@ describe('problem instantiator', () => {
       solutionValue: 54,
     })
   })
+
+  it('can simplify expressions', () => {
+    expect(
+      instantiate({
+        variables: [
+          { name: 'first', type: 'RANDOMINT', min: 3, max: 14 },
+          { name: 'second', type: 'RANDOMINT', min: 3, max: 14 },
+        ],
+        questionTemplate: '{first} * x + {second} * x',
+        solutionType: 'SIMPLIFY',
+        solutionTemplate: '{first} * x + {second} * x',
+      })
+    ).toEqual({
+      variables: {
+        first: '6',
+        second: '4',
+      },
+      questionText: '6 * x + 4 * x',
+      solutionExpression: '6 * x + 4 * x',
+      solutionValue: '10 * x',
+    })
+  })
 })
