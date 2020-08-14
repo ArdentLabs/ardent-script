@@ -5,7 +5,6 @@
 import { evaluate, simplify } from 'mathjs'
 import { VariableTemplate, generateVariables } from './generator'
 import { interpolate } from './interpolation'
-import { FailedVariableInstantiation } from './errors'
 
 interface ProblemTemplateBase {
   variables: VariableTemplate[]

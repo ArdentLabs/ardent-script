@@ -1,3 +1,7 @@
+/**
+ * Error classes used by this library.
+ */
+
 export class ValueNotFound extends Error {
   public readonly name: string
   public readonly availableValues: string[]
