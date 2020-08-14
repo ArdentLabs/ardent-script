@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.2.0](https://github.com/ArdentLabs/ardent-script/compare/v1.1.6...v1.2.0) (2020-08-14)
+
+
+### Features
+
+* **generator:** Implement shuffle operations ([0998edf](https://github.com/ArdentLabs/ardent-script/commit/0998edf302e838985f7fc71f1c54b481fa379b25))
+
 ### [1.1.6](https://github.com/ArdentLabs/ardent-script/compare/v1.1.5...v1.1.6) (2020-08-14)
 
 ### [1.1.5](https://github.com/ArdentLabs/ardent-script/compare/v1.1.4...v1.1.5) (2020-08-12)
