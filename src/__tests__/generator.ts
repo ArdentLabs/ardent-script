@@ -59,6 +59,32 @@ describe('value generator', () => {
     expect(parseFloat(variables['3'])).toBeCloseTo(18.8)
   })
 
+  it('can randomly choose a value', () => {
+    expect(
+      generateVariables([
+        { type: 'RANDOMCHOOSE', values: ['1', '2', '3', '4', '5'] },
+      ])
+    ).toEqual({
+      '1': '2',
+    })
+
+    expect(
+      generateVariables([
+        { type: 'RANDOMCHOOSE', values: ['1', '2', '3', '4', '5'] },
+      ])
+    ).toEqual({
+      '1': '1',
+    })
+
+    expect(
+      generateVariables([
+        { type: 'RANDOMCHOOSE', values: ['1', '2', '3', '4', '5'] },
+      ])
+    ).toEqual({
+      '1': '3',
+    })
+  })
+
   it('can shuffle variables', () => {
     expect(
       generateVariables([
