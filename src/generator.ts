@@ -23,6 +23,10 @@ export type VariableTemplate = {
       numDigits?: number
     }
   | {
+      type: 'RANDOMCHOOSE'
+      values: string[]
+    }
+  | {
       type: 'EVALUATE'
       expression: string
     }
@@ -62,6 +66,9 @@ const generateValue = (
       return `${
         template.min + Math.floor(random() * (template.max - template.min))
       }`
+    }
+    case 'RANDOMCHOOSE': {
+      return template.values[Math.floor(random() * template.values.length)]
     }
     case 'EVALUATE': {
       const expression = interpolate(template.expression, values)
