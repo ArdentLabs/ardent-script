@@ -1,7 +1,43 @@
-import { interpolate } from '../interpolation'
+import { interpolate, getVariables } from '../interpolation'
 import { ValueNotFound } from '../errors'
 
-describe('interpolation engine', () => {
+describe('variable detection', () => {
+  it('returns empty array on non template strings', () => {
+    expect(getVariables('foo bar')).toEqual([])
+    expect(getVariables('hello world')).toEqual([])
+    expect(
+      getVariables(
+        'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris pulvinar ultricies diam a porttitor.'
+      )
+    ).toEqual([])
+  })
+
+  it('recognizes variables', () => {
+    expect(getVariables('{foo} bar')).toEqual(['foo'])
+    expect(getVariables('{adjacent}{substitutions}')).toEqual([
+      'adjacent',
+      'substitutions',
+    ])
+    expect(
+      getVariables('some {parts } of this {string} is interpolated')
+    ).toEqual(['parts ', 'string'])
+  })
+
+  it('ignores escaped characters', () => {
+    expect(getVariables('the {{brackets {{are}} escaped}}')).toEqual([])
+    expect(getVariables('several {{ left {{ brackets {{')).toEqual([])
+  })
+
+  it('correctly detects variables in a complex template string', () => {
+    expect(
+      getVariables(
+        'several {{ left {{ brackets {{ to {confuse}  {{{variable detection}}}'
+      )
+    ).toEqual(['confuse', 'variable detection'])
+  })
+})
+
+describe('string interpolation engine', () => {
   it('does not affect non template strings', () => {
     expect(interpolate('foo bar')).toEqual('foo bar')
   })

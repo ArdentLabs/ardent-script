@@ -6,6 +6,11 @@ import { ValueNotFound } from './errors'
 
 const regex = /(?<escl>{{)|(?<escr>}})|{(?<var>[^{}]+)}/g
 
+export const getVariables = (template: string): string[] => {
+  const matches = [...template.matchAll(regex)]
+  return matches.map((match) => match[3]).filter((variable) => variable != null)
+}
+
 export const interpolate = (
   template: string,
   values: Record<string, string> = {}
