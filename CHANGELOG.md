@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.4.0](https://github.com/ArdentLabs/ardent-script/compare/v1.3.1...v1.4.0) (2020-08-17)
+
+
+### Features
+
+* **interpolation:** Implement getVariables ([a5456e9](https://github.com/ArdentLabs/ardent-script/commit/a5456e9f860f760da9750fe1d36426da65e57a17))
+
 ### [1.3.1](https://github.com/ArdentLabs/ardent-script/compare/v1.3.0...v1.3.1) (2020-08-17)
 
 
