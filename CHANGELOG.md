@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.4.1](https://github.com/ArdentLabs/ardent-script/compare/v1.4.0...v1.4.1) (2020-08-17)
+
+
+### Bug Fixes
+
+* **interpolation:** Compatability with older node version ([efbbb98](https://github.com/ArdentLabs/ardent-script/commit/efbbb98dfadf496722bb44026cc12c455f14a53d))
+
 ## [1.4.0](https://github.com/ArdentLabs/ardent-script/compare/v1.3.1...v1.4.0) (2020-08-17)
 
 
