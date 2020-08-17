@@ -44,6 +44,19 @@ describe('interpolation engine', () => {
     )
   })
 
+  it('tolerates special characters in variable names', () => {
+    expect(
+      interpolate(
+        'A variable name { replace here } anything that does not contain a {{ or }} character.',
+        {
+          ' replace here ': 'can be',
+        }
+      )
+    ).toEqual(
+      'A variable name can be anything that does not contain a { or } character.'
+    )
+  })
+
   it('can detect invalid variables', () => {
     expect(() => interpolate('{invalid} variable', { valid: 'foo' })).toThrow(
       ValueNotFound

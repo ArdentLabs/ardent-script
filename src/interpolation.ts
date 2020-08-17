@@ -4,7 +4,7 @@
 
 import { ValueNotFound } from './errors'
 
-const regex = /(?<escl>{{)|(?<escr>}})|{(?<var>[^\s{}]+)}/g
+const regex = /(?<escl>{{)|(?<escr>}})|{(?<var>[^{}]+)}/g
 
 export const interpolate = (
   template: string,
