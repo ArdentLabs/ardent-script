@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.3.1](https://github.com/ArdentLabs/ardent-script/compare/v1.3.0...v1.3.1) (2020-08-17)
+
+
+### Bug Fixes
+
+* **interpolation:** Tolerate whitespace character in variable name ([0744e01](https://github.com/ArdentLabs/ardent-script/commit/0744e011763e8509c03c65cb891be93517e3d255))
+
 ## [1.3.0](https://github.com/ArdentLabs/ardent-script/compare/v1.2.0...v1.3.0) (2020-08-14)
 
 
