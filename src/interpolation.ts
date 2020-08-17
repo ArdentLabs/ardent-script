@@ -7,8 +7,14 @@ import { ValueNotFound } from './errors'
 const regex = /(?<escl>{{)|(?<escr>}})|{(?<var>[^{}]+)}/g
 
 export const getVariables = (template: string): string[] => {
-  const matches = [...template.matchAll(regex)]
-  return matches.map((match) => match[3]).filter((variable) => variable != null)
+  const variables: string[] = []
+  let match
+  while ((match = regex.exec(template)) != null) {
+    if (match[3] != null) {
+      variables.push(match[3])
+    }
+  }
+  return variables
 }
 
 export const interpolate = (

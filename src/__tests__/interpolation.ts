@@ -21,6 +21,8 @@ describe('variable detection', () => {
     expect(
       getVariables('some {parts } of this {string} is interpolated')
     ).toEqual(['parts ', 'string'])
+    expect(getVariables('repeat {string}s')).toEqual(['string'])
+    expect(getVariables('repeat {string}s')).toEqual(['string'])
   })
 
   it('ignores escaped characters', () => {
