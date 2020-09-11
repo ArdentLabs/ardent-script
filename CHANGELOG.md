@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.4.2](https://github.com/ArdentLabs/ardent-script/compare/v1.4.1...v1.4.2) (2020-09-11)
+
+
+### Bug Fixes
+
+* **interpolation:** Escape regex characters for compatability ([ff6903a](https://github.com/ArdentLabs/ardent-script/commit/ff6903a964d03d4c2cfc4067f89f70bc90ca35c4))
+
 ### [1.4.1](https://github.com/ArdentLabs/ardent-script/compare/v1.4.0...v1.4.1) (2020-08-17)
 
 
