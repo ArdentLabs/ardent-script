@@ -4,7 +4,7 @@
 
 import { ValueNotFound } from './errors'
 
-const regex = /(?<escl>{{)|(?<escr>}})|{(?<var>[^{}]+)}/g
+const regex = /(?<escl>\{\{)|(?<escr>\}\})|\{(?<var>[^{}]+)\}/g
 
 export const getVariables = (template: string): string[] => {
   const variables: string[] = []
