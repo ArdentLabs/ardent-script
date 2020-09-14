@@ -12,13 +12,12 @@ export type VariableTemplate = {
 } & (
   | {
       type: 'RANDOMINT'
-      min: number
-      max: number
+      range: [number, number]
+      inclusive?: boolean | [boolean, boolean]
     }
   | {
       type: 'RANDOMFLOAT'
-      min: number
-      max: number
+      range: [number, number]
       /** If defined, round to this many digits after the decimal */
       numDigits?: number
     }
@@ -55,7 +54,8 @@ const generateValue = (
 ): string => {
   switch (template.type) {
     case 'RANDOMFLOAT': {
-      const value = template.min + random() * (template.max - template.min)
+      const [min, max] = template.range
+      const value = min + random() * (max - min)
       if (template.numDigits != null) {
         return value.toFixed(template.numDigits)
       } else {
@@ -63,9 +63,21 @@ const generateValue = (
       }
     }
     case 'RANDOMINT': {
-      return `${
-        template.min + Math.floor(random() * (template.max - template.min))
-      }`
+      let [min, max] = template.range
+      const [includeMin, includeMax] =
+        template.inclusive == null
+          ? [true, false]
+          : Array.isArray(template.inclusive)
+          ? template.inclusive
+          : [template.inclusive, template.inclusive]
+      if (!includeMin) {
+        min++
+      }
+      if (includeMax) {
+        max++
+      }
+
+      return `${min + Math.floor(random() * (max - min))}`
     }
     case 'RANDOMCHOOSE': {
       return template.values[Math.floor(random() * template.values.length)]

@@ -10,8 +10,8 @@ describe('problem instantiator', () => {
     expect(
       instantiate({
         variables: [
-          { name: 'a', type: 'RANDOMINT', min: 5, max: 12 },
-          { name: 'b', type: 'RANDOMINT', min: 2, max: 24 },
+          { name: 'a', type: 'RANDOMINT', range: [5, 12] },
+          { name: 'b', type: 'RANDOMINT', range: [2, 24] },
         ],
         questionTemplate: '{a} + {b}',
         solutionType: 'EVALUATE',
@@ -29,8 +29,8 @@ describe('problem instantiator', () => {
 
     const fpProblem = instantiate({
       variables: [
-        { type: 'RANDOMFLOAT', min: -5, max: 0 },
-        { type: 'RANDOMFLOAT', min: 3, max: 11, numDigits: 1 },
+        { type: 'RANDOMFLOAT', range: [-5, 0] },
+        { type: 'RANDOMFLOAT', range: [3, 11], numDigits: 1 },
       ],
       questionTemplate: '{1} * {2}',
       solutionType: 'EVALUATE',
@@ -52,8 +52,8 @@ describe('problem instantiator', () => {
     expect(
       instantiate({
         variables: [
-          { name: 'apples', type: 'RANDOMINT', min: 3, max: 11 },
-          { name: 'unitcost', type: 'RANDOMINT', min: 4, max: 7 },
+          { name: 'apples', type: 'RANDOMINT', range: [3, 11] },
+          { name: 'unitcost', type: 'RANDOMINT', range: [4, 7] },
           {
             name: 'totalcost',
             type: 'EVALUATE',
@@ -82,9 +82,9 @@ describe('problem instantiator', () => {
     expect(
       instantiate({
         variables: [
-          { name: 'ones', type: 'RANDOMINT', min: 5, max: 10 },
-          { name: 'tens', type: 'RANDOMINT', min: 3, max: 16 },
-          { name: 'add', type: 'RANDOMINT', min: 7, max: 10 },
+          { name: 'ones', type: 'RANDOMINT', range: [5, 10] },
+          { name: 'tens', type: 'RANDOMINT', range: [3, 16] },
+          { name: 'add', type: 'RANDOMINT', range: [7, 10] },
         ],
         questionTemplate: '{tens}{ones} + {add}',
         solutionType: 'EVALUATE',
@@ -106,8 +106,8 @@ describe('problem instantiator', () => {
     expect(
       instantiate({
         variables: [
-          { name: 'first', type: 'RANDOMINT', min: 3, max: 14 },
-          { name: 'second', type: 'RANDOMINT', min: 3, max: 14 },
+          { name: 'first', type: 'RANDOMINT', range: [3, 14] },
+          { name: 'second', type: 'RANDOMINT', range: [3, 14] },
         ],
         questionTemplate: '{first} * x + {second} * x',
         solutionType: 'SIMPLIFY',

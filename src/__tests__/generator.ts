@@ -9,8 +9,8 @@ describe('value generator', () => {
 
   it('randomly generates values', () => {
     const variables = generateVariables([
-      { name: 'randint', type: 'RANDOMINT', min: 2, max: 6 },
-      { name: 'randfloat', type: 'RANDOMFLOAT', min: 7, max: 15 },
+      { name: 'randint', type: 'RANDOMINT', range: [2, 6] },
+      { name: 'randfloat', type: 'RANDOMFLOAT', range: [7, 15] },
     ])
 
     expect(variables).toMatchObject({
@@ -23,12 +23,30 @@ describe('value generator', () => {
     expect(parseFloat(variables.randfloat)).toBeCloseTo(7.8)
   })
 
+  it('respects incluiveness for random integers', () => {
+    expect(
+      generateVariables([
+        { type: 'RANDOMINT', range: [0, 10] },
+        { type: 'RANDOMINT', range: [0, 10], inclusive: [true, false] },
+        { type: 'RANDOMINT', range: [0, 7], inclusive: false },
+        { type: 'RANDOMINT', range: [0, 19], inclusive: true },
+        { type: 'RANDOMINT', range: [0, 20], inclusive: [false, true] },
+      ])
+    ).toEqual({
+      '1': '3',
+      '2': '1',
+      '3': '3',
+      '4': '2',
+      '5': '11',
+    })
+  })
+
   it('can supply default names', () => {
     expect(
       generateVariables([
-        { type: 'RANDOMINT', min: -5, max: 13 },
-        { type: 'RANDOMINT', min: 4, max: 8 },
-        { type: 'RANDOMFLOAT', min: 4.6, max: 77 },
+        { type: 'RANDOMINT', range: [-5, 13] },
+        { type: 'RANDOMINT', range: [4, 8] },
+        { type: 'RANDOMFLOAT', range: [4.6, 77] },
       ])
     ).toMatchObject({
       '1': expect.any(String),
@@ -38,9 +56,9 @@ describe('value generator', () => {
 
     expect(
       generateVariables([
-        { name: 'uses', type: 'RANDOMINT', min: -5, max: 13 },
-        { type: 'RANDOMINT', min: 4, max: 8 },
-        { name: 'position', type: 'RANDOMFLOAT', min: 4.6, max: 77 },
+        { name: 'uses', type: 'RANDOMINT', range: [-5, 13] },
+        { type: 'RANDOMINT', range: [4, 8] },
+        { name: 'position', type: 'RANDOMFLOAT', range: [4.6, 77] },
       ])
     ).toMatchObject({
       uses: expect.any(String),
@@ -51,8 +69,8 @@ describe('value generator', () => {
 
   it('can evaluate composite expressions', () => {
     const variables = generateVariables([
-      { type: 'RANDOMFLOAT', min: 4, max: 6 },
-      { type: 'RANDOMINT', min: 3, max: 12 },
+      { type: 'RANDOMFLOAT', range: [4, 6] },
+      { type: 'RANDOMINT', range: [3, 12] },
       { type: 'EVALUATE', expression: '{1} * {2} + 5' },
     ])
 
@@ -88,10 +106,10 @@ describe('value generator', () => {
   it('can shuffle variables', () => {
     expect(
       generateVariables([
-        { type: 'RANDOMFLOAT', min: 0, max: 1, numDigits: 1 },
-        { type: 'RANDOMFLOAT', min: 0, max: 1, numDigits: 1 },
-        { type: 'RANDOMFLOAT', min: 0, max: 1, numDigits: 1 },
-        { type: 'RANDOMFLOAT', min: 0, max: 1, numDigits: 1 },
+        { type: 'RANDOMFLOAT', range: [0, 1], numDigits: 1 },
+        { type: 'RANDOMFLOAT', range: [0, 1], numDigits: 1 },
+        { type: 'RANDOMFLOAT', range: [0, 1], numDigits: 1 },
+        { type: 'RANDOMFLOAT', range: [0, 1], numDigits: 1 },
         { type: 'SHUFFLEADD', variables: ['1', '2', '3', '4'] },
       ])
     ).toEqual({
@@ -107,11 +125,11 @@ describe('value generator', () => {
 
     expect(
       generateVariables([
-        { type: 'RANDOMFLOAT', min: 0, max: 2, numDigits: 1 },
-        { type: 'RANDOMFLOAT', min: 0, max: 2, numDigits: 1 },
-        { type: 'RANDOMFLOAT', min: 0, max: 2, numDigits: 1 },
-        { type: 'RANDOMFLOAT', min: 1, max: 2, numDigits: 1 },
-        { type: 'RANDOMFLOAT', min: 0, max: 2, numDigits: 1 },
+        { type: 'RANDOMFLOAT', range: [0, 2], numDigits: 1 },
+        { type: 'RANDOMFLOAT', range: [0, 2], numDigits: 1 },
+        { type: 'RANDOMFLOAT', range: [0, 2], numDigits: 1 },
+        { type: 'RANDOMFLOAT', range: [1, 2], numDigits: 1 },
+        { type: 'RANDOMFLOAT', range: [0, 2], numDigits: 1 },
         { type: 'SHUFFLEMULT', variables: ['1', '2', '3', '4', '5'] },
       ])
     ).toEqual({
@@ -128,17 +146,17 @@ describe('value generator', () => {
   it('throws appropriate errors', () => {
     expect(() => {
       generateVariables([
-        { name: 'ok', type: 'RANDOMINT', min: 2, max: 4 },
-        { name: 'duplicate', type: 'RANDOMINT', min: 3, max: 5 },
-        { name: 'duplicate', type: 'RANDOMINT', min: 4, max: 6 },
+        { name: 'ok', type: 'RANDOMINT', range: [2, 4] },
+        { name: 'duplicate', type: 'RANDOMINT', range: [3, 5] },
+        { name: 'duplicate', type: 'RANDOMINT', range: [4, 6] },
       ])
     }).toThrow(DuplicateVariableName)
 
     expect(() => {
       generateVariables([
         { name: 'badorder', type: 'EVALUATE', expression: '{dep1} + {dep2}' },
-        { name: 'dep1', type: 'RANDOMINT', min: 4, max: 8 },
-        { name: 'dep2', type: 'RANDOMINT', min: 3, max: 10 },
+        { name: 'dep1', type: 'RANDOMINT', range: [4, 8] },
+        { name: 'dep2', type: 'RANDOMINT', range: [3, 10] },
       ])
     }).toThrow(FailedVariableInstantiation)
   })
