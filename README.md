@@ -25,11 +25,8 @@ As of 2020-09-14, the following variables types are available:
 - `EVALUATE`: Evaluate `expression` using the other variables.
   - This variable must come **after** all the variables it depends on.
 
-- `SHUFFLEADD`: Given a list of variables in `variables`, instantiate them using the variable values, shuffle their order, and join them using addition.
-  Output is the instantiated expression.
-
-- `SUFFLEMULT`: Given a list of variables in `variables`, instantiate them using the variable values, shuffle their order, and join them using multiplication.
-  Output is the instantiated expression.
+- `SHUFFLEJOIN`: Given a list of `operands`, shuffle them, instantiate them using the existing variables, and then join the operands together using the specified `operator`.
+  Note that `operator` and `operand` do not have to be valid operators and operands. The string processing works regardless.
 
 A variable may optionally specify a `name` to improve readability. By default, numbers are named using their order - the first variable would be named `1`, the second would be named `2`, and so on.
 

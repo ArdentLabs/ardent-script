@@ -30,12 +30,9 @@ export type VariableTemplate = {
       expression: string
     }
   | {
-      type: 'SHUFFLEADD'
-      variables: string[]
-    }
-  | {
-      type: 'SHUFFLEMULT'
-      variables: string[]
+      type: 'SHUFFLEJOIN'
+      operator: string
+      operands: string[]
     }
 )
 
@@ -80,27 +77,19 @@ const generateValue = (
       return `${min + Math.floor(random() * (max - min))}`
     }
     case 'RANDOMCHOOSE': {
-      return template.values[Math.floor(random() * template.values.length)]
+      return interpolate(
+        template.values[Math.floor(random() * template.values.length)],
+        values
+      )
     }
     case 'EVALUATE': {
       const expression = interpolate(template.expression, values)
       return `${evaluate(expression)}`
     }
-    case 'SHUFFLEADD': {
-      return interpolate(
-        shuffle(template.variables)
-          .map((variable) => `{${variable}}`)
-          .join(' + '),
-        values
-      )
-    }
-    case 'SHUFFLEMULT': {
-      return interpolate(
-        shuffle(template.variables)
-          .map((variable) => `{${variable}}`)
-          .join(' * '),
-        values
-      )
+    case 'SHUFFLEJOIN': {
+      return shuffle(template.operands)
+        .map((operand) => interpolate(operand, values))
+        .join(template.operator)
     }
   }
 }

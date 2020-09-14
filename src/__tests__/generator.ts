@@ -109,19 +109,23 @@ describe('value generator', () => {
         { type: 'RANDOMFLOAT', range: [0, 1], numDigits: 1 },
         { type: 'RANDOMFLOAT', range: [0, 1], numDigits: 1 },
         { type: 'RANDOMFLOAT', range: [0, 1], numDigits: 1 },
-        { type: 'RANDOMFLOAT', range: [0, 1], numDigits: 1 },
-        { type: 'SHUFFLEADD', variables: ['1', '2', '3', '4'] },
+        {
+          type: 'SHUFFLEJOIN',
+          operator: ' ',
+          operands: ['{1}', '{2}', '{3}', '0.7'],
+        },
       ])
     ).toEqual({
       '1': '0.3',
       '2': '0.1',
       '3': '0.4',
-      '4': '0.1',
-      '5': '0.1 + 0.3 + 0.1 + 0.4',
+      '4': '0.7 0.4 0.1 0.3',
     })
-    expect(random).toBeCalledTimes(7)
+    expect(random).toBeCalledTimes(6)
 
     reset()
+
+    expect(generateVariables([]))
 
     expect(
       generateVariables([
@@ -130,7 +134,11 @@ describe('value generator', () => {
         { type: 'RANDOMFLOAT', range: [0, 2], numDigits: 1 },
         { type: 'RANDOMFLOAT', range: [1, 2], numDigits: 1 },
         { type: 'RANDOMFLOAT', range: [0, 2], numDigits: 1 },
-        { type: 'SHUFFLEMULT', variables: ['1', '2', '3', '4', '5'] },
+        {
+          type: 'SHUFFLEJOIN',
+          operator: ' * ',
+          operands: ['{1}', '{2}', '{3}', '{4}', '{5}'],
+        },
       ])
     ).toEqual({
       '1': '0.6',
