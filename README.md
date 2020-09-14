@@ -16,7 +16,8 @@ Please check the typescript typings in `src/generator.ts` for the most up-to-dat
 
 As of 2020-09-14, the following variables types are available:
 
-- `RANDOMINT`: A random integer in [`min`, `max`).
+- `RANDOMINT`: A random integer in the specified `range`.
+  Optionally, specify whether minimum/maximum values are included using `inclusive`.
 
 - `RANDOMFLOAT`: A random floating point number in [`min`, `max`). If `numDigits` is specified, the result will be rounded to that many digits after the decimal point.
 
@@ -26,7 +27,7 @@ As of 2020-09-14, the following variables types are available:
   - This variable must come **after** all the variables it depends on.
 
 - `SHUFFLEJOIN`: Given a list of `operands`, shuffle them, instantiate them using the existing variables, and then join the operands together using the specified `operator`.
-  Note that `operator` and `operand` do not have to be valid operators and operands. The string processing works regardless.
+  - Note that `operator` and `operand` do not have to be valid operators and operands. The string processing works regardless.
 
 A variable may optionally specify a `name` to improve readability. By default, numbers are named using their order - the first variable would be named `1`, the second would be named `2`, and so on.
 
@@ -38,7 +39,7 @@ To specify part of the template that would be replaced by the value of a variabl
 
 For example, `'{x} + 1'`, with `x = '12'`, would be instantiated to `'12 + 1'`.
 
-Any string is applicable. Using the example above, if `x = '3 + 8'`, the resulting string would be `3 + 8 + 1`.
+Any string is applicable. Using the example above, if `x = '3 + 8'`, the resulting string would be `'3 + 8 + 1'`. If `x = 'foobar'`, the resulting string would be `'foobar + 1'`.
 
 To insert an actual curly brace into the text, use double-curly braces `{{` and `}}`.
 

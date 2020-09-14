@@ -13,6 +13,11 @@ export type VariableTemplate = {
   | {
       type: 'RANDOMINT'
       range: [number, number]
+      /**
+       * Whether the range is inclusive at either end.
+       * If it is a single boolean, it controls both ends.
+       * A pair of booleans is interpreted as `[includeMin, includeMax]`.
+       */
       inclusive?: boolean | [boolean, boolean]
     }
   | {
