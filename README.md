@@ -14,7 +14,7 @@ A variable is a "template" for generating a value.
 
 Please check the typescript typings in `src/generator.ts` for the most up-to-date information on how variables should be structured and what kind of variable definitions are available.
 
-As of 2020-08-12, there are three types of variables available:
+As of 2020-09-14, the following variables types are available:
 
 - `RANDOMINT`: A random integer in [`min`, `max`).
 
@@ -25,6 +25,12 @@ As of 2020-08-12, there are three types of variables available:
 - `EVALUATE`: Evaluate `expression` using the other variables.
   - This variable must come **after** all the variables it depends on.
 
+- `SHUFFLEADD`: Given a list of variables in `variables`, instantiate them using the variable values, shuffle their order, and join them using addition.
+  Output is the instantiated expression.
+
+- `SUFFLEMULT`: Given a list of variables in `variables`, instantiate them using the variable values, shuffle their order, and join them using multiplication.
+  Output is the instantiated expression.
+
 A variable may optionally specify a `name` to improve readability. By default, numbers are named using their order - the first variable would be named `1`, the second would be named `2`, and so on.
 
 ### Templates and Substitutions
@@ -34,6 +40,8 @@ A `template` is exactly what it sounds like - a template for generating somethin
 To specify part of the template that would be replaced by the value of a variable, use curly braces `{}`.
 
 For example, `'{x} + 1'`, with `x = '12'`, would be instantiated to `'12 + 1'`.
+
+Any string is applicable. Using the example above, if `x = '3 + 8'`, the resulting string would be `3 + 8 + 1`.
 
 To insert an actual curly brace into the text, use double-curly braces `{{` and `}}`.
 
