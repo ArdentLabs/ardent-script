@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.0.0](https://github.com/ArdentLabs/ardent-script/compare/v1.4.3...v2.0.0) (2020-09-14)
+
+
+### ⚠ BREAKING CHANGES
+
+* **generator:** `SHUFFLEADD` and `SHUFFLEMULT` are replaced by `SHUFFLEJOIN`.
+* **generator:** `min` and `max` are no longer valid fields for `RANDOMINT` and `RANDOMFLOAT`. Use the `range` field instead.
+
+* **generator:** Change random range signature ([#1](https://github.com/ArdentLabs/ardent-script/issues/1)) ([40491f4](https://github.com/ArdentLabs/ardent-script/commit/40491f4c5a2e67a78cd4006a2ef55cfaec1285f4))
+* **generator:** Unify shuffle variables ([#2](https://github.com/ArdentLabs/ardent-script/issues/2)) ([d79718d](https://github.com/ArdentLabs/ardent-script/commit/d79718d0f9986d0f70ef94f9ff170fe55af4248c))
+
 ### [1.4.3](https://github.com/ArdentLabs/ardent-script/compare/v1.4.2...v1.4.3) (2020-09-14)
 
 ### [1.4.2](https://github.com/ArdentLabs/ardent-script/compare/v1.4.1...v1.4.2) (2020-09-11)
